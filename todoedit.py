@@ -7,8 +7,10 @@ while True:
 
            itlis.append(it)
        case 'show':
-           itlis=[i for i in itlis]
-           print(itlis)
+           for indexes, names in enumerate(itlis):
+               print(f"{indexes}-{names}")
+           #itlis=[i for i in itlis]
+           #print(itlis)
            #print(*itlis,sep='\n')
        case 'edit':
            rep=int(input("which item do you want to edit? say in number"))
