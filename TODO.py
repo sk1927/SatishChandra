@@ -11,8 +11,8 @@ while True:
            itlis.append(it)
 
            with open('todo.txt', 'w') as f:
-                f.writelines(itlis)
-                f.close()
+                 f.writelines(itlis)
+                 f.close()
            message="added successfully!"
        case 'show':
            with open('todo.txt', 'r') as f:
