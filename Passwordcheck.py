@@ -47,3 +47,6 @@ def strength(password):
     else:
         # Return "Weak Password" if any attribute is False
         return "Weak Password"
+
+pw=input("Enter password: \n")
+print(strength(pw))

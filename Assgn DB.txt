@@ -1,0 +1,268 @@
+
+Vendor(vendorID,VendorName,VendorAddress)
+Department(DeptName,DeptPhone)
+Buys_From(vendorID,DeptName)
+
+Location(LocID,LocCity,LocState,LocPopulation)
+Employee(EmpNo,EmpFirstName,EmpLastName,EmpTitle,EmpDOB,DeptName,SpouseEmpNo,Date_Married,LocId)
+
+
+Skill(SkillNo,SkillDescription)
+Project(ProjNo,ProjEstCost,LocId)
+EmpSkill(SkillNo,EmpNo,ProjNo)
+
+drop table vendor;
+drop table department;
+drop table buys_from;
+drop table Location;
+drop table Employee;
+drop table Skill;
+drop table project;
+drop table empskill;
+
+
+
+
+CREATE TABLE Vendor (
+    vendorID INT PRIMARY KEY,
+    VendorName VARCHAR(255) NOT NULL,
+    VendorAddress VARCHAR(255)
+);
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (1, 'ABC Corp', '123 Main St');
+INSERT INTO Vendor (vendorID, VendorName) VALUES (2, 'XYZ Co');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (3, 'Acme Inc', '456 Elm St');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (4, 'Smith Co', '789 Oak Ave');
+INSERT INTO Vendor (vendorID, VendorName) VALUES (5, 'Jones Enterprises');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (6, 'Johnson Ltd', '345 Maple Rd');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (7, 'Wilson & Sons', '567 Birch St');
+INSERT INTO Vendor (vendorID, VendorName) VALUES (8, 'Global Imports');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (9, 'ABC Suppliers', '901 Elm St');
+INSERT INTO Vendor (vendorID, VendorName, VendorAddress) VALUES (10, 'XYZ Distributors', '234 Oak Ave');
+
+
+
+
+CREATE TABLE Department (
+    DeptName VARCHAR(255) PRIMARY KEY,
+    DeptPhone VARCHAR(20) NOT NULL
+);
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Sales', '555-1234');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Marketing', '555-2345');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Engineering', '555-3456');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Human Resources', '555-4567');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Finance', '555-5678');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Customer Service', '555-6789');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Information Technology', '555-7890');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Research and Development', '555-8901');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Production', '555-9012');
+INSERT INTO Department (DeptName, DeptPhone) VALUES ('Purchasing', '555-0123');
+
+
+
+CREATE TABLE Buys_From (
+    vendorID INT NOT NULL,
+    DeptName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (vendorID, DeptName),
+    FOREIGN KEY (vendorID) REFERENCES Vendor(vendorID),
+    FOREIGN KEY (DeptName) REFERENCES Department(DeptName)
+);
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (1, 'Sales');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (2, 'Marketing');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (3, 'Engineering');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (4, 'Human Resources');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (5, 'Finance');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (6, 'Customer Service');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (7, 'Information Technology');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (8, 'Research and Development');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (9, 'Production');
+INSERT INTO Buys_From (vendorID, DeptName) VALUES (10, 'Purchasing');
+
+
+
+CREATE TABLE Location (
+    LocID INT PRIMARY KEY,
+    LocCity VARCHAR(255) NOT NULL,
+    LocState VARCHAR(255) NOT NULL,
+    LocPopulation INT
+);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (1, 'New York City', 'New York', 8398748);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (2, 'Los Angeles', 'California', 3990456);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (3, 'Chicago', 'Illinois', 2705994);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (4, 'Houston', 'Texas', 2325502);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (5, 'Phoenix', 'Arizona', 1660272);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (6, 'Philadelphia', 'Pennsylvania', 1584064);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (7, 'San Antonio', 'Texas', 1532233);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (8, 'San Diego', 'California', 1425976);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (9, 'Dallas', 'Texas', 1343573);
+INSERT INTO Location (LocID, LocCity, LocState, LocPopulation) VALUES (10, 'San Jose', 'California', 1030119);
+
+
+
+CREATE TABLE Employee (
+    EmpNo INT PRIMARY KEY,
+    EmpFirstName VARCHAR(255) NOT NULL,
+    EmpLastName VARCHAR(255) NOT NULL,
+    EmpTitle VARCHAR(255) NOT NULL,
+    EmpDOB DATE NOT NULL,
+    DeptName VARCHAR(255),
+    SpouseEmpNo INT,
+    Date_Married DATE,
+    LocId INT,
+    FOREIGN KEY (DeptName) REFERENCES Department(DeptName),
+    FOREIGN KEY (SpouseEmpNo) REFERENCES Employee(EmpNo),
+    FOREIGN KEY (LocId) REFERENCES Location(LocID)
+);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (100, 'Mark', 'Meyers', 'Manager', '1984-01-01', 'Sales', NULL, NULL, 1);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (101, 'John', 'Doe', 'Manager', '1980-01-01', 'Sales', NULL, NULL, 1);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (102, 'Jane', 'Doe', 'Assistant Manager', '1985-02-14', 'Sales', 100, '2010-05-25', 1);
+update employee set SpouseEmpNo=102 and Date_Married='2010-05-25' where EmpNo=100;
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (103, 'Bob', 'Smith', 'Salesperson', '1975-07-30', 'Sales', NULL, NULL, 2);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (104, 'Alice', 'Johnson', 'Manager', '1978-05-12', 'Marketing', 103, '2005-05-12', 3);
+update employee set SpouseEmpNo=104 and Date_Married='2005-05-12' where EmpNo=103;
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (105, 'David', 'Lee', 'Marketing Specialist', '1983-11-20', 'Marketing', NULL, NULL, 4);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (106, 'Sarah', 'Kim', 'Marketing Specialist', '1986-04-17', 'Marketing', 105, '2013-04-17', 5);
+update employee set SpouseEmpNo=106 and Date_Married='2013-04-17' where EmpNo=105;
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (107, 'James', 'Chen', 'Engineer', '1991-09-05', 'Engineering', NULL, NULL, 6);
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (108, 'Amy', 'Wong', 'Assistant Engineer', '1994-12-08', 'Engineering', 107, '2020-02-15', 7);
+update employee set SpouseEmpNo=108 and Date_Married='2020-02-15' where EmpNo=107;
+INSERT INTO Employee (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpDOB, DeptName, SpouseEmpNo, Date_Married, LocId) VALUES (109, 'Michael', 'Davis', 'Engineer', '1992-06-23', 'Engineering', NULL, NULL, 8);
+
+
+CREATE TABLE Skill (
+    SkillNo INT PRIMARY KEY,
+    SkillDescription VARCHAR(255) NOT NULL
+);
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (1, 'Programming');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (2, 'Database Administration');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (3, 'Network Engineering');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (4, 'Web Development');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (5, 'Project Management');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (6, 'Data Analysis');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (7, 'Cybersecurity');
+INSERT INTO Skill (SkillNo, SkillDescription) VALUES (8, 'Cloud Computing');
+
+
+CREATE TABLE Project (
+    ProjNo INT PRIMARY KEY,
+    ProjEstCost DECIMAL(10, 2) NOT NULL,
+    LocId INT,
+    FOREIGN KEY (LocId) REFERENCES Location(LocID)
+);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (1, 100000.00, 1);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (2, 250000.00, 2);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (3, 500000.00, 3);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (4, 750000.00, 1);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (5, 1000000.00, 2);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (6, 2500000.00, 3);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (7, 5000000.00, 1);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (8, 7500000.00, 2);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (9, 10000000.00, 3);
+INSERT INTO Project (ProjNo, ProjEstCost, LocId) VALUES (10, 25000000.00, 1);
+
+
+CREATE TABLE EmpSkill (
+    SkillNo INT NOT NULL,
+    EmpNo INT NOT NULL,
+    ProjNo INT NOT NULL,
+    PRIMARY KEY (SkillNo, EmpNo, ProjNo),
+    FOREIGN KEY (SkillNo) REFERENCES Skill(SkillNo),
+    FOREIGN KEY (EmpNo) REFERENCES Employee(EmpNo),
+    FOREIGN KEY (ProjNo) REFERENCES Project(ProjNo)
+);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (1, 100, 1);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (2, 101, 1);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (3, 102, 2);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (4, 103, 2);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (5, 104, 3);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (6, 105, 3);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (7, 106, 4);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (8, 107, 4);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (2, 108, 5);
+INSERT INTO EmpSkill (SkillNo, EmpNo, ProjNo) VALUES (3, 109, 5);
+
+
+a.
+SELECT DISTINCT LocCity
+FROM Employee
+JOIN Location ON Employee.LocId = Location.LocID
+ORDER BY LocCity ASC;
+
+
+b.
+SELECT EmpNo as consultant_id, SkillNo, ProjNo
+FROM EmpSkill
+WHERE SkillNo IN (1, 2, 3);
+
+c.
+SELECT EmpFirstName as Consultant_FirstName, EmpLastName as Consultant_LastName
+FROM Employee
+WHERE EmpLastName REGEXP '.*[aeiou]$' AND EmpLastName NOT LIKE '.*[y]$';
+
+
+d.
+SELECT e.EmpLastName, p.ProjNo
+FROM Employee e
+JOIN EmpSkill es ON e.EmpNo = es.EmpNo
+JOIN Project p ON es.ProjNo = p.ProjNo
+ORDER BY p.ProjNo DESC, e.EmpLastName ASC;
+
+
+
+e.
+SELECT e.EmpFirstName, e.EmpLastName
+FROM Employee e
+INNER JOIN EmpSkill es ON e.EmpNo = es.EmpNo
+INNER JOIN Project p ON es.ProjNo = p.ProjNo
+WHERE p.ProjNo IN (
+    SELECT es.ProjNo
+    FROM EmpSkill es
+    INNER JOIN Employee e ON es.EmpNo = e.EmpNo
+    WHERE e.EmpFirstName = 'Mark' AND e.EmpLastName = 'Meyers'
+)
+AND e.EmpFirstName != 'Mark' AND e.EmpLastName != 'Meyers'
+ORDER BY p.ProjNo DESC, e.EmpLastName ASC;
+
+
+f.
+select p.projno,count(e.projno)
+from project p
+left join empskill e on e.projno=p.projno
+group by p.projno;
+
+
+
+g.
+This query selects the employee number, first and last name, skill number, and skill description for all employees, even if they have no skills. The LEFT OUTER JOIN on EmpSkill ensures that all employees are included in the result set, regardless of whether they have a corresponding record in the EmpSkill table. Similarly, the LEFT OUTER JOIN on Skill ensures that all skills are included in the result set, even if there are no corresponding records in the EmpSkill table.
+
+SELECT e.EmpNo, e.EmpFirstName, e.EmpLastName, s.SkillNo, s.SkillDescription
+FROM Employee e
+LEFT OUTER JOIN EmpSkill es ON e.EmpNo = es.EmpNo
+LEFT OUTER JOIN Skill s ON es.SkillNo = s.SkillNo;
+
+
+h.
+This query selects the employee title and counts the number of employees with that title, then groups the results by title. The HAVING clause filters the results to only include titles with more than one employee. This query can help identify areas of the organization where there may be duplication of roles or potential for consolidation.
+
+SELECT EmpTitle, COUNT(*) AS TotalEmployees
+FROM Employee
+GROUP BY EmpTitle
+HAVING COUNT(*) > 1;
+
+i.
+SELECT Department.DeptName
+FROM Department
+LEFT JOIN Employee ON Department.DeptName = Employee.DeptName
+WHERE Employee.DeptName IS NULL;
+
+
+j.
+This query retrieves a list of all unique employee numbers who are assigned to project number 1 in the EmpSkill table. The DISTINCT keyword ensures that each employee number is only listed once in the result set, even if they have multiple skills assigned to them for the project.
+
+SELECT DISTINCT EmpNo
+FROM EmpSkill
+WHERE ProjNo = 1;
+
+
+
+
+
