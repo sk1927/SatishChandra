@@ -1,23 +1,28 @@
+def file_read():
+    with open('todo.txt', 'r') as f:
+        itlis = f.readlines()
+    return itlis
+"""This file_read function used to read the contents of the txet file """
+
+def test_file_read():
+    with open('todo.txt', 'w') as f:
+        f.write('test')
+    assert file_read() == ['test']
 itlis = []
 while True:
-    usrin=input("Enter add show edit delete or exit to your to do list:")
+    usrin=input("Type add show edit delete or exit:")
     match usrin:
        case 'add':
            it=input("Enter the item you want to add:")+'\n'
-
-           with open('todo.txt', 'r') as f:
-               itlis=f.readlines()
-               f.close()
+           itlis=file_read()
            itlis.append(it)
 
            with open('todo.txt', 'w') as f:
                  f.writelines(itlis)
-                 f.close()
+
            message="added successfully!"
        case 'show':
-           with open('todo.txt', 'r') as f:
-               itlis=f.readlines()
-               f.close()
+           itlis=file_read()
            for indexes, names in enumerate(itlis):
                names=names.strip('\n')
                print(f"{indexes+1}-{names}")
@@ -26,9 +31,7 @@ while True:
            #print(*itlis,sep='\n')
        case 'edit':
            rep=int(input("which item do you want to edit? say in number"))
-           with open('todo.txt', 'r') as f:
-               itlis=f.readlines()
-               f.close()
+           itlis=file_read()
            newwrd=input("enter new item")
            itlis[rep-1]=newwrd
            with open('todo.txt', 'w') as f:
@@ -40,9 +43,7 @@ while True:
                print(f"{indexes + 1}-{names}")
        case 'delete':
            rem=int(input("which item do you want to delete? say in number"))
-           with open('todo.txt', 'r') as f:
-               itlis=f.readlines()
-               f.close()
+           itlis=file_read()
            itlis.pop(rem - 1)
            for indexes, names in enumerate(itlis):
                names=names.strip('\n')
